@@ -71,21 +71,21 @@ namespace Scp069.EventHandlers
                                         return false;
                                     }
 
-                                    plytogive.GameObject.AddComponent<Component.Scp069Component>();
+                                    plytogive.GameObject.AddComponent<Components.Scp069Component>();
                                     response = $"{Plugin.Instance.Config.TranslateCommand.GiveCommand_GivingtoAnotherPlayer.Replace("{nick}", plytogive.Nickname)}";
                                     return true;
 
                                 }
                                 else
                                 {
-                                    var plySender = Player.Get((sender as CommandSender).SenderId);
+                                    var plySender = Player.Get((sender as CommandSender)?.SenderId);
 
                                     if (Handlers.MainHandler.scp069Players.Contains(plySender))
                                     {
                                         response = $"{Plugin.Instance.Config.TranslateCommand.GiveCommand_PlayerAlreadyis}";
                                         return false;
                                     }
-                                    plySender.GameObject.AddComponent<Component.Scp069Component>();
+                                    plySender.GameObject.AddComponent<Components.Scp069Component>();
                                     response = $"\n{Plugin.Instance.Config.TranslateCommand.GiveCommand_Givingtoyou}";
                                     return true;
                                 }
@@ -113,7 +113,7 @@ namespace Scp069.EventHandlers
 
                                     try
                                     {
-                                        plytoremove.GameObject.TryGetComponent<Component.Scp069Component>(out var component);
+                                        plytoremove.GameObject.TryGetComponent<Components.Scp069Component>(out var component);
                                         component.Destroy();
                                         response = $"{Plugin.Instance.Config.TranslateCommand.RemoveCommand_RemovingPlayer.Replace("{nick}", plytoremove.Nickname)}";
                                         return true;
@@ -132,7 +132,7 @@ namespace Scp069.EventHandlers
                                     var plySender = Player.Get((sender as CommandSender).SenderId);
                                     try
                                     {
-                                        plySender.GameObject.TryGetComponent<Component.Scp069Component>(out var component);
+                                        plySender.GameObject.TryGetComponent<Components.Scp069Component>(out var component);
                                         component.Destroy();
                                         response = $"{Plugin.Instance.Config.TranslateCommand.RemoveCommand_RemovingYou}";
                                         return true;
@@ -171,13 +171,12 @@ namespace Scp069.EventHandlers
             }
             catch (Exception e)
             {
-
                 Log.Error($"{e.TargetSite} {e.Message}\n{e.StackTrace}");
                 response = "Error: " + e;
                 return false;
             }
-
         }
+
         private string AllScps069()
         {
             string msg = $"{Plugin.Instance.Config.TranslateCommand.Scp069ListTitle}\n";
@@ -192,6 +191,7 @@ namespace Scp069.EventHandlers
             {
                 msg = $"{Plugin.Instance.Config.TranslateCommand.NoScp069InList}\n";
             }
+
             return msg;
         }
     }

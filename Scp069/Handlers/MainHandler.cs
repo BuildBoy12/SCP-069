@@ -1,14 +1,13 @@
 ﻿using Exiled.API.Features;
 using Exiled.Events.EventArgs;
 using MEC;
-using Scp069.System;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Scp069.Handlers
 {
-    public class MainHandler : Base.Handler
+    public class MainHandler
     {
         /// <summary>
         /// SCP-069 Players List | Do not add manually, the component automatically adds players that have SCP-069.
@@ -34,11 +33,12 @@ namespace Scp069.Handlers
             Exiled.Events.Handlers.Player.ChangingRole -= ChanginRole;
             foreach (Player plys in scp069Players)
             {
-                if (plys.GameObject.TryGetComponent<Component.Scp069Component>(out var comp))
+                if (plys.GameObject.TryGetComponent<Components.Scp069Component>(out var comp))
                 {
                     comp.Destroy();
                 }
             }
+
             scp069Players.Clear();
             victims.Clear();
         }
@@ -58,6 +58,7 @@ namespace Scp069.Handlers
                 victims.Remove(ev.Player);
             }
         }
+
         public void RoundStart()
         {
             try
